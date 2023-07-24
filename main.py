@@ -26,12 +26,12 @@ def add_user(users_table:list):
     dict1 = {}
     print('''
     User Name Instructions:
-    1. Must to be just letters
-    2. More than 4 letters  
+    1. Must to be just letters.
+    2. More than 4 letters.
           
     Password Instructions:
     Please make sure that your password is:
-    1. Passwords must be a minimum of seven characters in length.
+    1. minimum of 7 characters.
     2. Must consist both numbers and signs/letters.''')
 
     user_name = input("Please enter user name: ")
@@ -66,8 +66,8 @@ def login(user_name:str, password:str, users_table:list):
         if ((user_name == user) and (password == user["user_name"])):
             return("Welcome")
         else:
-            return("Not such user")
-    return ("No data from data base")
+            return("No such user")
+    return ("No such user")
 
 
 
