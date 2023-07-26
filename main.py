@@ -1,5 +1,6 @@
 #This file contain only functions 
 import pickle
+from task_class import Task
 users_table = []
 
 ## - save data base
@@ -19,10 +20,20 @@ def upload():
 
 
 
+#1 - user login
+def login(user_name:str, password:str, users_table:list):
+    for user_password in users_table:
+        if ((user_name == user_password['password']) and (password == user_password)):
+            return("Welcome")
+        else:
+            return("No such user")
+    return ("No such user")
 
 
-#1 - adding user
-def add_user(users_table:list):
+
+
+#2 - adding user
+def add_user(users_table:list,user_name:str, password:str):
     dict1 = {}
     print('''
     User Name Instructions:
@@ -33,9 +44,6 @@ def add_user(users_table:list):
     Please make sure that your password is:
     1. minimum of 7 characters.
     2. Must consist both numbers and signs/letters.''')
-
-    user_name = input("Please enter user name: ")
-    password = input("Please enter password: ")
 
     for user in users_table:
         if ((len(user_name) > 4) and (user_name.isalpha) and (user_name != user )):
@@ -51,24 +59,30 @@ def add_user(users_table:list):
             print("Password is not ok")
             exit()
     
-    dict1.update({user_name:password})
+    dict1.update({password:user_name})
     users_table.append(dict1)
     save(users_table)
     return ("User add successfully")
     
 
 
-
-
-#2 - user login
-def login(user_name:str, password:str, users_table:list):
-    for user in users_table:
-        if ((user_name == user) and (password == user["user_name"])):
-            return("Welcome")
+#3 - delete user
+def delete_user(users_table:list,password_to_delete:str):
+    '''The password is the key so it is 1 in a kind'''
+    for user_password in users_table:
+        if password_to_delete == user_password.keys():
+            del(user_password)
+            save(users_table)
+            return "User deleted"   
+            
         else:
-            return("No such user")
-    return ("No such user")
+            return "No such user"
+    
 
 
 
-print(add_user(users_table))
+
+#4 - Add task
+def add_task (task_name, task_num, name, tz, category,accept_date, mission_end_date, description):
+    task1 = Task(task_name = task_name, task_num = task_num, name = name, tz = tz, category = category, accept_date = accept_date, mission_end_date = mission_end_date, description = description)
+    return task1
