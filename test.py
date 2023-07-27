@@ -1,8 +1,9 @@
 from main import save
 #test 1 - add user
-users_table = [{'eya2986407':'eyaly'}, {'eyal322986407':'eyalyeh'}]
+users_table = [{'eya2986407':'eyaly'}, {'ohad123':'eyalyeh'}]
 def add_user(user_name,password):
     dict1 = {}
+  
     print('''
     User Name Instructions:
     1. Must to be just letters
@@ -42,17 +43,29 @@ def add_user(user_name,password):
 
 def delete_user(users_table:list,password_to_delete:str):
     '''The password is the key so it is 1 in a kind'''
-    for user in users_table:
-        if password_to_delete == user.keys():
-            del(user_password)
-            save(users_table)
-             
+    for users in users_table:
+        for password in users:
+            if password_to_delete == password:
+                users_table.remove(users)
+                save(users_table)
+                print("User deleted")
             
-      
-    
+        else:
+            continue
 
 # password_to_delete = input("ENTER PASSWORD: ")
-print(delete_user(users_table,password_to_delete = 'eya2986407'))
-print(users_table)
+# delete_user(users_table,password_to_delete='eya2986407')
+# print(users_table)
 
+
+
+def search_user(users_table:list,password:str):
+   for users in users_table:
+        for passwords in users:
+            if password == passwords:
+                print(users)
+
+
+
+search_user(users_table,password='ohad123')
 

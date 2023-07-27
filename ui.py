@@ -1,6 +1,7 @@
-from main import login,add_user,upload,add_task
+from main import login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task
 action = None
 users_table = []
+tasks_list = []
 import datetime
 approval = "No data"
 
@@ -20,7 +21,14 @@ while approval != 'Welcome':
     2. Show users Data Base
     3. Delete specific user
     4. Add mission
-    5. exit
+    5. search for user
+    6. search all task per user
+    7.Update task by a key
+    8. sort by categories
+    9. show all tasks
+    10. exit
+                           
+    ##. exit
     '''))
     
        
@@ -35,18 +43,55 @@ while approval != 'Welcome':
 
         #Delete user
         elif action == 3:
-            password_to_delete = input("Enter user's password that u want to delete")
-            print(users_table,password_to_delete)
+            password_to_delete = input("Enter user's password that u want to delete: ")
+            delete_user(users_table,password_to_delete)
 
-        
+        #Add task
         elif action == 4:
+            categories = {}
             task_name = input("Enter task name:")
-            task_num = int(input("Enter task number:"))
+            task_num = len(tasks_list ) + 1
             name = input("Enter who's going to do the task:")
             tz = input("Enter id of the executing: ")
-            category = input("Enter which category the task belongs to:")
+            category = categories.get(key = int(input('''Enter which category the task belongs to:
+                                         1. cleaning
+                                         2. buying
+                                         3. cooking'''))) 
             accept_date = datetime.today()
             mission_end_date = input("Enter end date for the task:")  
             description = input("Enter task description:")  
             
-            print(add_task((task_name, task_num, name, tz, category,accept_date, mission_end_date, description)))
+            print(add_task((task_name, task_num, name, tz, category, accept_date, mission_end_date, description)))
+
+
+        #Search user 
+        elif action == 5:
+            password = input("Enter password to search user: ")
+            search_user(users_table,password)
+
+         #Search tasks for person 
+        elif action == 6:
+            tz = input("Enter Id to search user: ")
+            print(search_person_tasks(tasks_list,tz))
+
+        #Update task by a key
+        elif action == 7: 
+            key = int(input('''Update 1 of the followings: 
+            1: Task Name
+            2: Person Name
+            3: Mission End Date'''))
+            update_task(tasks_list,key)
+    
+        
+        elif action == 8: 
+            pass
+
+
+        elif action == 9: 
+            pass
+
+
+        
+        elif action == 10:
+            break
+        pass
