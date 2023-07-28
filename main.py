@@ -1,17 +1,15 @@
-#This file contain only functions 
+#This file contains only functions 
 import pickle
 from task_class import Task
 users_table = []
-
-## - save data base
+tasks_list = []
+## - save user data base
 def save(list_to_save:list):
     #saving data base to pickle
     with open ("users.pickle",'wb') as f:
         pickle.dump(list_to_save,f)
 
-
-
-## - upload data base
+## - upload user data base
 def upload():
     #uploading data base from pickle
     with open ("users.pickle",'rb') as f:
@@ -19,21 +17,35 @@ def upload():
     return table
 
 
+## - save task data base
+def save_tasks(list_to_save:list):
+    #saving data base to pickle
+    with open ("tasks.pickle",'wb') as f:
+        pickle.dump(list_to_save,f)
+
+## - upload tasks data base
+def upload_tasks():
+    #uploading data base from pickle
+    with open ("tasks.pickle",'rb') as f:
+        table = pickle.load(f)
+    return table
+
+
 
 #1 - user login
 def login(user_name:str, password:str, users_table:list):
-    for user_password in users_table:
-        if ((user_name == user_password['password']) and (password == user_password)):
-            return("Welcome")
-        else:
-            return("No such user")
-    return ("No such user")
-
+    for user in users_table:
+        for parameter_password in user:
+            if ((user_name == user.get(password)) and (password == parameter_password)):
+                return("Welcome")
+    else:
+        return("No such user")
+    
 
 
 
 #2 - adding user
-def add_user(users_table:list,user_name:str, password:str):
+def add_user(users_table:list):
     dict1 = {}
     print('''
     User Name Instructions:
@@ -44,6 +56,10 @@ def add_user(users_table:list,user_name:str, password:str):
     Please make sure that your password is:
     1. minimum of 7 characters.
     2. Must consist both numbers and signs/letters.''')
+
+
+    user_name = input("Enter new user name: ")
+    password = input("Enter new password: ")
 
     for user in users_table:
         if ((len(user_name) > 4) and (user_name.isalpha) and (user_name != user )):
@@ -82,12 +98,12 @@ def delete_user(users_table:list,password_to_delete:str):
 
 
 
-tasks_list = []
+
 #4 - Add task
-def add_task (task_name, task_num, name, tz,accept_date, mission_end_date, description):
-    task1 = Task(task_name = task_name, task_num = task_num, name = name, tz = tz, accept_date = accept_date, mission_end_date = mission_end_date, description = description)
+def add_task (task_name:str, task_serial_num:int, name:str, tz:str, accept_date:str, mission_end_date:str, description:str,status:bool):
+    task1 = Task(task_name = task_name, task_serial_num = task_serial_num, name = name, tz = tz, accept_date = accept_date, mission_end_date = mission_end_date, description = description,status = status)
     tasks_list.append(task1)
-    save(tasks_list)
+    save_tasks(tasks_list)
     return task1
 
 
@@ -132,15 +148,16 @@ def update_task(tasks_list:list,key:str):
             new_end_date = input("Enter a new end date: ")
             task.mission_end_date = new_end_date
             print("Date updated")
-            save(tasks_list)
+            save_tasks(tasks_list)
 
 
-#8 - search by category
-# def search_by_category(tasks_list,key):
-#     for task in tasks_list:
-#         for x in task
-#         if task.category == key:
-#     pass
+#8 - search tasks by category
+def search_by_category(tasks_list,key):
+    category_list = []
+    for task in tasks_list:
+        if task.category == key:
+            category_list.append(task)
+
 
 
 #9 - show all tasks
@@ -154,7 +171,7 @@ def changing_status(tasks_list:list, serial_num:int):
             if answer.capitalize() == 'Yes':
                 task.status = True
                 print("Status has changed! ")
-                save(tasks_list)
+                save_tasks(tasks_list)
         else:
             print("Serial number not found")
     return task
@@ -162,12 +179,12 @@ def changing_status(tasks_list:list, serial_num:int):
 
 
 #11 - Tasks status
-def checking_status(tasks_list:list, sta:bool):
+def checking_status(tasks_list:list, status_value:bool):
     status_list= []
-    
     for task in tasks_list:
-        if sta == task.status:
+        if status_value == task.status:
             status_list.append(task)
     return status_list
 
 
+#12 - exit
