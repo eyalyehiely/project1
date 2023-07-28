@@ -15,8 +15,8 @@ def save(list_to_save:list):
 def upload():
     #uploading data base from pickle
     with open ("users.pickle",'rb') as f:
-        users_table = pickle.load(f)
-    return users_table
+        table = pickle.load(f)
+    return table
 
 
 
@@ -135,5 +135,39 @@ def update_task(tasks_list:list,key:str):
             save(tasks_list)
 
 
+#8 - search by category
+# def search_by_category(tasks_list,key):
+#     for task in tasks_list:
+#         for x in task
+#         if task.category == key:
+#     pass
 
-       
+
+#9 - show all tasks
+
+
+#10 - changing status
+def changing_status(tasks_list:list, serial_num:int):
+    for task in tasks_list:
+        if task.task_serial_num == serial_num:
+            answer = input("Enter Yes for done, No for not")
+            if answer.capitalize() == 'Yes':
+                task.status = True
+                print("Status has changed! ")
+                save(tasks_list)
+        else:
+            print("Serial number not found")
+    return task
+
+
+
+#11 - Tasks status
+def checking_status(tasks_list:list, sta:bool):
+    status_list= []
+    
+    for task in tasks_list:
+        if sta == task.status:
+            status_list.append(task)
+    return status_list
+
+

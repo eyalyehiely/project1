@@ -41,17 +41,17 @@ def add_user(user_name,password):
 
 #2 
 
-def delete_user(users_table:list,password_to_delete:str):
-    '''The password is the key so it is 1 in a kind'''
-    for users in users_table:
-        for password in users:
-            if password_to_delete == password:
-                users_table.remove(users)
-                save(users_table)
-                print("User deleted")
+# def delete_user(users_table:list,password_to_delete:str):
+#     '''The password is the key so it is 1 in a kind'''
+#     for users in users_table:
+#         for password in users:
+#             if password_to_delete == password:
+#                 users_table.remove(users)
+#                 save(users_table)
+#                 print("User deleted")
             
-        else:
-            continue
+#         else:
+#             continue
 
 # password_to_delete = input("ENTER PASSWORD: ")
 # delete_user(users_table,password_to_delete='eya2986407')
@@ -59,13 +59,23 @@ def delete_user(users_table:list,password_to_delete:str):
 
 
 
-def search_user(users_table:list,password:str):
-   for users in users_table:
-        for passwords in users:
-            if password == passwords:
-                print(users)
+# def search_user(users_table:list,password:str):
+#    for users in users_table:
+#         for passwords in users:
+#             if password == passwords:
+#                 print(users)
 
 
 
-search_user(users_table,password='ohad123')
+# search_user(users_table,password='ohad123')
 
+
+# import random
+# x= random.choice(20)
+# print(x)
+
+
+
+sta = bool(input("Enter which status do you want to check: True/False "))
+
+print(type(sta))

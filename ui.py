@@ -1,9 +1,12 @@
-from main import login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task
+from main import login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task,changing_status,checking_status
+import random
+import datetime
 action = None
 users_table = []
 tasks_list = []
-import datetime
 approval = "No data"
+
+
 
 while approval != 'Welcome':
     user_name = input("Enter your user name: ")
@@ -26,9 +29,9 @@ while approval != 'Welcome':
     7.Update task by a key
     8. sort by categories
     9. show all tasks
-    10. exit
-                           
-    ##. exit
+    10. changing task status
+    11. show tasks status
+    12. exit
     '''))
     
        
@@ -50,7 +53,7 @@ while approval != 'Welcome':
         elif action == 4:
             categories = {}
             task_name = input("Enter task name:")
-            task_num = len(tasks_list ) + 1
+            task_serial_num = len(tasks_list) + 1
             name = input("Enter who's going to do the task:")
             tz = input("Enter id of the executing: ")
             category = categories.get(key = int(input('''Enter which category the task belongs to:
@@ -59,9 +62,10 @@ while approval != 'Welcome':
                                          3. cooking'''))) 
             accept_date = datetime.today()
             mission_end_date = input("Enter end date for the task:")  
-            description = input("Enter task description:")  
+            description = input("Enter task description:") 
+            status = False  
             
-            print(add_task((task_name, task_num, name, tz, category, accept_date, mission_end_date, description)))
+            print(add_task((task_name, task_serial_num, name, tz, category, accept_date, mission_end_date, description,status)))
 
 
         #Search user 
@@ -86,12 +90,23 @@ while approval != 'Welcome':
         elif action == 8: 
             pass
 
-
+        #Show all tasks data
         elif action == 9: 
-            pass
+            print(upload(tasks_list))
 
 
-        
+        #Change task status
         elif action == 10:
+            serial_num = int(input("Enter task serial number to search: "))
+            print(changing_status(tasks_list,serial_num))
+
+
+        #Show tasks status
+        elif action == 11:
+            sta = bool(input("Enter which status do you want to check: True/False "))
+            checking_status(tasks_list, sta)
+        
+
+        elif action == 12:
             break
-        pass
+      
