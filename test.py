@@ -107,18 +107,20 @@ action = None
 users_table = []
 tasks_list = []
 
-answer = int(input("1 : sign in / 2 : login: "))
-if answer == 2:
-    for i in range(3):
-        print("You have",abs((i-3)),"tries to login")
-        user_name = input("Enter your user name: ")
-        password = input("Enter your password: ")
-        approval = login(user_name, password, users_table)
-        if approval == "Welcome":
-            continue
-    else:
-        print("You transferred to the Sign in window")
-        approval = (add_user(users_table))
-else:
-    print("Sign in window")
-    approval = (add_user(users_table)) 
+# answer = int(input("1 -> sign in / 2 -> login: "))
+# if answer == 2:
+#     for i in range(3):
+#         print("You have",abs((i-3)),"tries to login")
+#         user_name = input("Enter your user name: ")
+#         password = input("Enter your password: ")
+#         approval = login(user_name, password, users_table)
+#         if approval == "Welcome":
+#             continue
+#     else:
+#         print("You have been transferred to the Sign in window: ")
+#         approval = print((add_user(users_table)))
+        
+# elif answer == 1:
+#     print("Sign in window")
+#     add_user(users_table)
+print(add_user(users_table))

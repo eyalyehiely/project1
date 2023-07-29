@@ -1,4 +1,4 @@
-from main import login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task,changing_status,checking_status,upload_tasks
+from main import login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task,changing_status,checking_status,upload_tasks,save
 import datetime
 action = None
 users_table = []
@@ -7,22 +7,22 @@ tasks_list = []
 answer = int(input("1 : sign in / 2 : login: "))
 if answer == 2:
     for i in range(3):
-        print("You have",abs((i-3)),"tries to login")
+        print("You have",abs((i-3)),"tries to login: ")
         user_name = input("Enter your user name: ")
         password = input("Enter your password: ")
-        approval = login(user_name, password, users_table)
+        approval = print(login(user_name, password, users_table))
         if approval == "Welcome":
             continue
     else:
-        print("You transferred to the Sign in window")
-        approval = (add_user(users_table))
+        print("You have been transferred to the Sign in window: ")
+        approval = print((add_user(users_table)))
         
 else:
     print("Sign in window")
-    approval = (add_user(users_table)) 
+    approval = print((add_user(users_table)))
 
 
-    while approval == "welcome" or action != 12 or approval == "User add successfully":
+    while approval == "welcome" or approval == "User add successfully" or action != 12:
         action = int(input('''
     Welcome - U arrived to the Task menu.
     Please press one of the following actions:

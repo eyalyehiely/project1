@@ -17,7 +17,7 @@ def upload():
     return table
 
 
-## - save task data base
+## - save tasks data base
 def save_tasks(list_to_save:list):
     #saving data base to pickle
     with open ("tasks.pickle",'wb') as f:
@@ -27,8 +27,8 @@ def save_tasks(list_to_save:list):
 def upload_tasks():
     #uploading data base from pickle
     with open ("tasks.pickle",'rb') as f:
-        table = pickle.load(f)
-    return table
+        tasks_table = pickle.load(f)
+    return tasks_table
 
 
 
@@ -56,29 +56,51 @@ def add_user(users_table:list):
     Please make sure that your password is:
     1. minimum of 7 characters.
     2. Must consist both numbers and signs/letters.''')
-
-
-    user_name = input("Enter new user name: ")
-    password = input("Enter new password: ")
-
-    for user in users_table:
-        if ((len(user_name) > 4) and (user_name.isalpha) and (user_name != user )):
-            print("User name is ok ! - continue to password")
-        else:
-            print("User name is not ok")
-            exit()
+    if users_table == []:
+        user_name = input("Enter new user name: ")
+        password = input("Enter new password: ")
+        answer1 = False
+        answer2 = False
+        if((len(password) >= 7) and (password.isdigit() == False)):
+               answer1 = True
         
+        if((len(user_name) > 4) and (user_name.isalpha() == True)):
+            answer2 = True
 
-        if((len(password) >= 7) and (password.isdigit != True)):
-            print("Password is ok")
+
+        if ((answer1 == True) and (answer2 == True)):
+            dict1.update({password:user_name})
+            users_table.append(dict1)
+            save(users_table)
+            return("User add successfully")
         else:
-            print("Password is not ok")
-            exit()
+            return("Try again later")
+
     
-    dict1.update({password:user_name})
-    users_table.append(dict1)
-    save(users_table)
-    return ("User add successfully")
+    else:
+        user_name = input("Enter new user name: ")
+        password = input("Enter new password: ")
+        answer1 = False
+        answer2 = False
+        for user in users_table:
+            for parameter_password in user:
+                if((len(password) >= 7) and (password.isdigit() == False) and (password != parameter_password)):
+                    answer1 = True
+            
+            if((len(user_name) > 4) and (user_name.isalpha() == True)):
+                answer2 = True
+
+
+        if ((answer1 == True) and (answer2 == True)):
+            dict1.update({password:user_name})
+            users_table.append(dict1)
+            save(users_table)
+            return("User add successfully")
+        else:
+            return("Try again later")
+            
+
+    
     
 
 
