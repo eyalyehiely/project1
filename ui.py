@@ -3,6 +3,7 @@ import datetime
 action = None
 users_table = []
 tasks_list = []
+categories = {1:'cleaning', 2:'buying',3:'cooking'}
 
 answer = int(input("1 : sign in / 2 : login: "))
 if answer == 2:
@@ -57,26 +58,26 @@ else:
 
         #Add task
         elif action == 4:
-            categories = {}
             task_name = input("Enter task name:")
-            task_serial_num = len(tasks_list) + 1
+            task_serial_num = int(len(tasks_list) + 1)
             name = input("Enter who's going to do the task:")
             tz = input("Enter id of the executing: ")
-            category = categories.get(key = int(input('''Enter which category the task belongs to:
+            key = int(input('''Enter digit for the category that the task belongs to:
                                             1. cleaning
                                             2. buying
-                                            3. cooking'''))) 
+                                            3. cooking'''))
+            category = categories.get(key,"No such category")
             accept_date = datetime.date.today()
             print("Enter end date for the task:")  
-            day = datetime(input("Enter finish day:"))
-            month = datetime(input("Enter finish month:"))
-            year = datetime(input("Enter finish year:"))
-            mission_end_date = datetime.timedelta(year,month,day)
+            day = datetime.date(input("Enter finish day:"))
+            month = datetime.date(input("Enter finish month:"))
+            year = datetime.date(input("Enter finish year:"))
+            mission_end_date = datetime.date(year,month,day)
             description = input("Enter task description:") 
             status = False  
             
             
-            print(add_task((task_name, task_serial_num, name, tz, category, accept_date, mission_end_date, description, status,)))
+            print(add_task((task_name, task_serial_num, name, tz, category, accept_date, mission_end_date, description, status)))
 
 
         #Search user 

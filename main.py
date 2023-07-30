@@ -128,11 +128,12 @@ def delete_user(password_to_delete:str, users_table:list):
 
 
 #4 - Add task
-def add_task (task_name:str, task_serial_num:int, name:str, tz:str,accept_date, mission_end_date, description:str,status:bool,day = None,year = None,month =None):
-    task1 = Task(task_name = task_name, task_serial_num = task_serial_num, name = name, tz = tz, accept_date = datetime.date.today(), mission_end_date = datetime.datetime.date(year,month,day), description = description,status = status)
+def add_task (task_name:str, task_serial_num:int, name:str, tz:str,category:dict, accept_date:datetime, mission_end_date:datetime, description:str,status:bool):
+    task1 = Task(task_name = task_name, task_serial_num = task_serial_num, name = name, tz = tz,category = category, accept_date = accept_date, mission_end_date = mission_end_date, description = description,status = status)
+    tasks_list = upload_tasks()
     tasks_list.append(task1)
     save_tasks(tasks_list)
-    return task1
+    return tasks_list
 
 
 #5 search user - by password
