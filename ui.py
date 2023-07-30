@@ -1,4 +1,4 @@
-from main import login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task,changing_status,checking_status,upload_tasks,save
+from main import upload,upload_tasks, login, add_user, upload, add_task, delete_user, search_user, search_person_tasks,update_task,changing_status,checking_status,upload_tasks,search_by_category
 import datetime
 action = None
 users_table = []
@@ -10,16 +10,16 @@ if answer == 2:
         print("You have",abs((i-3)),"tries to login: ")
         user_name = input("Enter your user name: ")
         password = input("Enter your password: ")
-        approval = print(login(user_name, password, users_table))
+        approval = print(login(user_name, password, users_table = upload()))
         if approval == "Welcome":
             continue
     else:
         print("You have been transferred to the Sign in window: ")
-        approval = print((add_user(users_table)))
+        approval = print((add_user(users_table = upload())))
         
 else:
     print("Sign in window")
-    approval = print((add_user(users_table)))
+    approval = print((add_user(users_table = upload())))
 
 
     while approval == "welcome" or approval == "User add successfully" or action != 12:
@@ -43,7 +43,7 @@ else:
         
         #Add user to Data Base
         if action == 1:
-            print(add_user(users_table))
+            print(add_user(users_table = upload))
         
         #Show users data base
         elif action == 2:
@@ -53,7 +53,7 @@ else:
         #Delete user
         elif action == 3:
             password_to_delete = input("Enter user's password that u want to delete: ")
-            delete_user(users_table,password_to_delete)
+            delete_user(password_to_delete, users_table = upload())
 
         #Add task
         elif action == 4:
@@ -66,23 +66,28 @@ else:
                                             1. cleaning
                                             2. buying
                                             3. cooking'''))) 
-            accept_date = datetime.today()
-            mission_end_date = input("Enter end date for the task:")  
+            accept_date = datetime.date.today()
+            print("Enter end date for the task:")  
+            day = datetime(input("Enter finish day:"))
+            month = datetime(input("Enter finish month:"))
+            year = datetime(input("Enter finish year:"))
+            mission_end_date = datetime.timedelta(year,month,day)
             description = input("Enter task description:") 
             status = False  
             
-            print(add_task((task_name, task_serial_num, name, tz, category, accept_date, mission_end_date, description,status)))
+            
+            print(add_task((task_name, task_serial_num, name, tz, category, accept_date, mission_end_date, description, status,)))
 
 
         #Search user 
         elif action == 5:
             password = input("Enter password to search user: ")
-            search_user(users_table,password)
+            search_user(password, users_table = upload())
 
             #Search tasks for person 
         elif action == 6:
             tz = input("Enter Id to search user: ")
-            print(search_person_tasks(tasks_list,tz))
+            print(search_person_tasks(tz, tasks_list = upload_tasks()))
 
         #Update task by a key
         elif action == 7: 
@@ -90,29 +95,32 @@ else:
             1: Task Name
             2: Person Name
             3: Mission End Date'''))
-            update_task(tasks_list,key)
+            update_task(key, tasks_list = upload_tasks())
 
-        
-        elif action == 8: 
-            pass
+        #Search task by category
+        # elif action == 8: 
+        #     search_by_category(key, tasks_list = upload_tasks())
+
+
 
         #Show all tasks data
         elif action == 9: 
-            print(upload_tasks(tasks_list))
+            print(upload_tasks())
 
 
         #Change task status
         elif action == 10:
             serial_num = int(input("Enter task serial number to search: "))
-            print(changing_status(tasks_list,serial_num))
+            print(changing_status(serial_num, tasks_list = upload_tasks()))
 
 
         #Show tasks status
         elif action == 11:
             status_value = bool(input("Enter which status do you want to check: True/False "))
-            checking_status(tasks_list, status_value)
+            checking_status(status_value, tasks_list = upload_tasks())
         
         #break
         elif action == 12:
+            print("U left the menu, bye...")
             break
         

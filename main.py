@@ -1,5 +1,6 @@
 #This file contains only functions 
 import pickle
+import datetime
 from task_class import Task
 users_table = []
 tasks_list = []
@@ -44,10 +45,12 @@ def login(user_name:str, password:str, users_table:list):
 
 
 
-#2 - adding user
+#2 - add user
 def add_user(users_table:list):
     dict1 = {}
     print('''
+    Add user:
+          
     User Name Instructions:
     1. Must to be just letters.
     2. More than 4 letters.
@@ -97,7 +100,9 @@ def add_user(users_table:list):
             save(users_table)
             return("User add successfully")
         else:
-            return("Try again later")
+            print("Try Again")
+            print(add_user(users_table))
+
             
 
     
@@ -105,41 +110,43 @@ def add_user(users_table:list):
 
 
 #3 - delete user
-def delete_user(users_table:list,password_to_delete:str):
+def delete_user(password_to_delete:str, users_table:list):
     '''The password is the key so it is 1 in a kind'''
     for users in users_table:
         for password in users:
             if password_to_delete == password:
                 users_table.remove(users)
                 save(users_table)
-                print("User deleted")
+                return("User deleted")
             
-        else:
-            continue
+            else:
+                continue
+    return("No such user")
     
 
 
 
 
 #4 - Add task
-def add_task (task_name:str, task_serial_num:int, name:str, tz:str, accept_date:str, mission_end_date:str, description:str,status:bool):
-    task1 = Task(task_name = task_name, task_serial_num = task_serial_num, name = name, tz = tz, accept_date = accept_date, mission_end_date = mission_end_date, description = description,status = status)
+def add_task (task_name:str, task_serial_num:int, name:str, tz:str,accept_date, mission_end_date, description:str,status:bool,day = None,year = None,month =None):
+    task1 = Task(task_name = task_name, task_serial_num = task_serial_num, name = name, tz = tz, accept_date = datetime.date.today(), mission_end_date = datetime.datetime.date(year,month,day), description = description,status = status)
     tasks_list.append(task1)
     save_tasks(tasks_list)
     return task1
 
 
 #5 search user - by password
-def search_user(users_table:list,password:str):
+def search_user(password:str, users_table:list):
    for users in users_table:
         for passwords in users:
             if password == passwords:
-                print(users)
+                return(f"The user is: {users}")
+        return print("No such user")
 
 
 
 #6 search tasks for person  - by tz
-def search_person_tasks(tasks_list:list,tz:str):
+def search_person_tasks(tz:str, tasks_list:list):
     person_tasks = []
     for task in tasks_list:
         if tz == task.tz:
@@ -148,7 +155,7 @@ def search_person_tasks(tasks_list:list,tz:str):
 
 
 #7 - update
-def update_task(tasks_list:list,key:str):
+def update_task(key:str, tasks_list:list):
     
     for task in tasks_list:
         if key == 1:
@@ -186,7 +193,7 @@ def search_by_category(tasks_list,key):
 
 
 #10 - changing status
-def changing_status(tasks_list:list, serial_num:int):
+def changing_status(serial_num:int, tasks_list:list):
     for task in tasks_list:
         if task.task_serial_num == serial_num:
             answer = input("Enter Yes for done, No for not")
@@ -200,8 +207,8 @@ def changing_status(tasks_list:list, serial_num:int):
 
 
 
-#11 - Tasks status
-def checking_status(tasks_list:list, status_value:bool):
+#11 - Show Tasks status
+def checking_status(status_value:bool,tasks_list:list):
     status_list= []
     for task in tasks_list:
         if status_value == task.status:
@@ -209,4 +216,4 @@ def checking_status(tasks_list:list, status_value:bool):
     return status_list
 
 
-#12 - exit
+#12 - exit from menu
