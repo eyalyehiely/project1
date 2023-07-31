@@ -32,13 +32,12 @@ def upload_tasks():
     return tasks_table
 
 
-
 #1 - user login
 def login(user_name:str, password:str, users_table:list):
     for user in users_table:
         for parameter_password in user:
             if ((user_name == user.get(password)) and (password == parameter_password)):
-                return("Welcome")
+                return("welcome")
     else:
         return("No such user")
     
@@ -138,11 +137,11 @@ def add_task (task_name:str, task_serial_num:int, name:str, tz:str,category:dict
 
 #5 search user - by password
 def search_user(password:str, users_table:list):
-   for users in users_table:
-        for passwords in users:
+   for user in users_table:
+        for passwords in user:
             if password == passwords:
-                return(f"The user is: {users}")
-        return print("No such user")
+                return(f"The user is: {user}")
+        #return ("No such user")
 
 
 
@@ -156,18 +155,17 @@ def search_person_tasks(tz:str, tasks_list:list):
 
 
 #7 - update
-def update_task(key:str, tasks_list:list):
+def update_task(key:str, tasks_list:list,serial_num:int):
     
     for task in tasks_list:
-        if key == 1:
-
+        if ((key == 1) and (task.task_serial_num == serial_num)):
             new_name = input("Enter a new task name: ")
             task.task_name = new_name
             print("Task name updated")
             save_tasks(tasks_list)
             return task
 
-        elif key == 2:
+        elif ((key == 2) and (task.task_serial_num == serial_num)):
             person_name = input("Enter a new person name: ")
             new_tz = input("Enter a new Id name: ")
             task.name = person_name
@@ -178,22 +176,27 @@ def update_task(key:str, tasks_list:list):
 
             
         
-        elif key == 3:
-            new_end_date = input("Enter a new end date: ")
-            task.mission_end_date = new_end_date
+        elif ((key == 3) and (task.task_serial_num == serial_num)):
+            
+            day = int(datetime.date(input("Enter finish day:")))
+            month = int(datetime.date(input("Enter finish month:")))
+            year = int(datetime.date(input("Enter finish year:")))
+            mission_end_date = datetime.date(year,month,day)
+            task.mission_end_date =mission_end_date
             print("Date updated")
             save_tasks(tasks_list)
             return task
+        else:
+            print("Serial number doesn't match")
 
 
 
 #8 - search tasks by category
-def search_by_category(tasks_list,key):
+def search_by_category(key,tasks_list):
     category_list = []
     for task in tasks_list:
-        if task.category == key:
+        if key == task.category :
             category_list.append(task)
-    
     return category_list
 
 
@@ -203,16 +206,16 @@ def search_by_category(tasks_list,key):
 
 #10 - changing status
 def changing_status(serial_num:int, tasks_list:list):
-    for task in tasks_list:
-        if task.task_serial_num == serial_num:
-            answer = input("Enter Yes for done, No for not")
-            if answer.capitalize() == 'Yes':
+   for task in tasks_list:
+        if serial_num == task.task_serial_num:
+            if task.status == False:
                 task.status = True
-                print("Status has changed! ")
-                save_tasks(tasks_list)
-        else:
-            print("Serial number not found")
-    return task
+                
+            else:
+                task.status = False
+        print("Status has changed! ")
+        save_tasks(tasks_list)
+        return tasks_list
 
 
 
@@ -225,4 +228,34 @@ def checking_status(status_value:bool,tasks_list:list):
     return status_list
 
 
-#12 - exit from menu
+
+#12 - delete task
+def delete_task(serial_num:int, tasks_list:list):
+    '''The serial num is the key so it is 1 in a kind'''
+    for task in tasks_list:
+        if task.task_serial_num == serial_num:
+                tasks_list.remove(task)
+                save(tasks_list)
+                return(f"Task deleted\n{tasks_list}")
+       
+    #return("No such user")
+
+
+
+#13 - exit from menu
+
+
+#for manager:
+def delete_all_users(users_table):
+    users_table = []
+    save(users_table)
+
+
+
+
+def delete_all_tasks(tasks_list):
+    tasks_list = []
+    save(tasks_list)
+
+
+delete_all_tasks(tasks_list)
