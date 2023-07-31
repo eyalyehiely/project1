@@ -92,7 +92,7 @@ else:
 
         #Update task by a key
         elif action == 7: 
-            key = int(input('''Update 1 of the followings: 
+            key = int(input('''Update 1 of the followings, press number between 1 to 3: 
             1: Task Name
             2: Person Name
             3: Mission End Date'''))

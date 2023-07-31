@@ -1,4 +1,4 @@
-from main import login,add_user,delete_user,upload,add_task,search_user,search_person_tasks,upload_tasks,save_tasks
+from main import login,add_user,delete_user,upload,add_task,search_user,search_person_tasks,upload_tasks,save_tasks,update_task,search_by_category,checking_status
 users_table = [{'eya2986407':'eyaly'}, {'ohad123':'eyalyeh'},{'ohad1234567':'ohadyehiely'}]
 import datetime
 import random
@@ -44,13 +44,32 @@ import random
 
 
 
-
-
+#print(upload_tasks())
 
 #5 - search user
-#print(search_user(password ='ey2986407', users_table = users_table))
+#print(search_user(password ='eya2986407', users_table = users_table))
 
 
 #6 -search_person_tasks
-# print(search_person_tasks(tz, tasks_list):)
+#print(search_person_tasks(tz = '345234524' , tasks_list= upload_tasks()))
+#output = relevant task according the Id
 
+
+#7 - update task by a key
+# print(update_task(key = 1 , tasks_list  = upload_tasks()))
+
+
+#8 - search tasks by category
+#print(search_by_category(tasks_list = upload_tasks(), key = 'buying'))
+
+
+#9 - show all tasks
+#print(upload_tasks())
+
+
+#10 - changing status
+# changing_status(serial_num, tasks_list = upload_tasks()):
+
+#11 - show tasks status
+#print(checking_status(status_value = True, tasks_list = upload_tasks()))
+#output = []

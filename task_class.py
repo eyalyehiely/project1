@@ -20,6 +20,6 @@ class Task:
 
     
     def __repr__(self):
-        return f"\nTask Name:\t{self.task_name}\nTask Number:\t{self.task_serial_num}\nPerson Name:\t{self.name}\nId:\t\t{self.tz}\nCategory:\t{self.category}\nAccepting Date:\t{self.accept_date}\nEnd Date:\t{self.mission_end_date}\nDescription:\t{self.description}\nTask Status\t{self.status}\n\n"
+        return f"\nTask Name:\t{self.task_name}\nSerial Num:\t{self.task_serial_num}\nPerson Name:\t{self.name}\nId:\t\t{self.tz}\nCategory:\t{self.category}\nAccepting Date:\t{self.accept_date}\nEnd Date:\t{self.mission_end_date}\nDescription:\t{self.description}\nTask Status\t{self.status}\n\n"
     
 

@@ -160,10 +160,12 @@ def update_task(key:str, tasks_list:list):
     
     for task in tasks_list:
         if key == 1:
+
             new_name = input("Enter a new task name: ")
             task.task_name = new_name
             print("Task name updated")
-            save(tasks_list)
+            save_tasks(tasks_list)
+            return task
 
         elif key == 2:
             person_name = input("Enter a new person name: ")
@@ -171,7 +173,9 @@ def update_task(key:str, tasks_list:list):
             task.name = person_name
             task.tz = new_tz
             print("Details updated")
-            save(tasks_list)
+            save_tasks(tasks_list)
+            return task
+
             
         
         elif key == 3:
@@ -179,6 +183,8 @@ def update_task(key:str, tasks_list:list):
             task.mission_end_date = new_end_date
             print("Date updated")
             save_tasks(tasks_list)
+            return task
+
 
 
 #8 - search tasks by category
@@ -187,6 +193,8 @@ def search_by_category(tasks_list,key):
     for task in tasks_list:
         if task.category == key:
             category_list.append(task)
+    
+    return category_list
 
 
 
@@ -210,7 +218,7 @@ def changing_status(serial_num:int, tasks_list:list):
 
 #11 - Show Tasks status
 def checking_status(status_value:bool,tasks_list:list):
-    status_list= []
+    status_list = []
     for task in tasks_list:
         if status_value == task.status:
             status_list.append(task)
