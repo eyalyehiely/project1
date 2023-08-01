@@ -1,5 +1,5 @@
 from main import add_user,delete_user,upload,add_task,upload_tasks,save_tasks,update_task,delete_task,updating_status
-users_table = [{'eya2986407':'eyaly'}, {'ohad123':'eyalyeh'},{'ohad1234567':'ohadyehiely'}]
+users_table = [{'eya2986407':'eyaly'}, {'tal123':'talmanor'},{'ohad1234567':'ohadyehiely'}]
 import datetime
 import random
 import math
@@ -20,10 +20,10 @@ import math
 #print(upload(users_table))
 #-------------------------------------------#
 #3 - delete user
-# print(delete_user(users_table = users_table, password_to_delete = 'eya2986407'))
+#print(delete_user(users_table = upload(), password_to_delete = 'eya2986407'))
 #print(upload())
-'''output = User deleted
-[{'ohad123': 'eyalyeh'}]'''
+#output = User deleted
+
 #-------------------------------------------#
 
 
