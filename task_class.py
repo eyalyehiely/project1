@@ -7,7 +7,7 @@ import datetime
 #         self.tz = tz
 
 class Task:
-    def __init__(self, task_name:str = "def",task_serial_num:int = None, name:str = 'def',category:dict = {} ,accept_date =None,mission_end_date = None, description:str = 'def',tz = 'def',status = False):
+    def __init__(self, task_name:str = "def",task_serial_num:int = None, name:str = 'def',category:dict = {} ,accept_date =None,mission_end_date = None, description:str = 'def',tz = 'def',status = 'Not finished'):
         self.task_name = task_name
         self.tz = tz
         self.task_serial_num = task_serial_num

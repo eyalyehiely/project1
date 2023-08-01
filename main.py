@@ -4,6 +4,7 @@ import datetime
 from task_class import Task
 users_table = []
 tasks_list = []
+
 ## - save user data base
 def save(list_to_save:list):
     #saving data base to pickle
@@ -36,7 +37,7 @@ def upload_tasks():
 def login(user_name:str, password:str, users_table:list):
     for user in users_table:
         for parameter_password in user:
-            if ((user_name == user.get(password)) and (password == parameter_password)):
+            if ((user_name == user.get(parameter_password)) and (password == parameter_password)):
                 return("welcome")
     else:
         return("No such user")
@@ -103,8 +104,6 @@ def add_user(users_table:list):
             print(add_user(users_table))
 
             
-
-    
     
 
 
@@ -178,16 +177,16 @@ def update_task(key:str, tasks_list:list,serial_num:int):
         
         elif ((key == 3) and (task.task_serial_num == serial_num)):
             
-            day = int(datetime.date(input("Enter finish day:")))
-            month = int(datetime.date(input("Enter finish month:")))
-            year = int(datetime.date(input("Enter finish year:")))
+            day = int(input("Enter finish day:"))
+            month = int(input("Enter finish month:"))
+            year = int(input("Enter finish year:"))
             mission_end_date = datetime.date(year,month,day)
-            task.mission_end_date =mission_end_date
+            task.mission_end_date = mission_end_date
             print("Date updated")
             save_tasks(tasks_list)
             return task
-        else:
-            print("Serial number doesn't match")
+    else:
+        print("Serial number doesn't match")
 
 
 
@@ -202,26 +201,41 @@ def search_by_category(key,tasks_list):
 
 
 #9 - show all tasks
+## in ui
 
 
-#10 - changing status
-def changing_status(serial_num:int, tasks_list:list):
-   for task in tasks_list:
+#10 - update status
+def updating_status(done:str,serial_num:int, tasks_list:list):
+    for task in tasks_list:
         if serial_num == task.task_serial_num:
-            if task.status == False:
-                task.status = True
-                
-            else:
-                task.status = False
-        print("Status has changed! ")
-        save_tasks(tasks_list)
-        return tasks_list
+            if done == 'y':
+                task.status = 'Finished'
+                print("Status has changed! ")
+                save(tasks_list)
+                return task
+            elif done == 'y':
+                task.status = 'Not finished'
+                save(tasks_list)
+                return task
+
+            elif ((done != 'y') and (done != 'n')) :
+                print("Not valid text, please try again")
+        
+
+
 
 
 
 #11 - Show Tasks status
-def checking_status(status_value:bool,tasks_list:list):
+def checking_status(status_value:str,tasks_list:list):
     status_list = []
+    if status_value == 't':
+        status_value = 'Finished'
+    elif status_value == 'f':
+        status_value = 'Not finished'
+    else: 
+        print("No valid data")
+
     for task in tasks_list:
         if status_value == task.status:
             status_list.append(task)
@@ -229,7 +243,16 @@ def checking_status(status_value:bool,tasks_list:list):
 
 
 
-#12 - delete task
+#12 - search task by serial num
+def search_task(serial_num:int, tasks_list:list):
+   for task in tasks_list:
+        if serial_num == task.task_serial_num:
+            return(f"The task is: {task}")
+
+
+
+
+#13 - delete task
 def delete_task(serial_num:int, tasks_list:list):
     '''The serial num is the key so it is 1 in a kind'''
     for task in tasks_list:
@@ -238,24 +261,11 @@ def delete_task(serial_num:int, tasks_list:list):
                 save(tasks_list)
                 return(f"Task deleted\n{tasks_list}")
        
-    #return("No such user")
+  
 
 
 
-#13 - exit from menu
-
-
-#for manager:
-def delete_all_users(users_table):
-    users_table = []
-    save(users_table)
+#14 - exit from menu
 
 
 
-
-def delete_all_tasks(tasks_list):
-    tasks_list = []
-    save(tasks_list)
-
-
-delete_all_tasks(tasks_list)
