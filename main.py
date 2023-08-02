@@ -4,6 +4,7 @@ import datetime
 from task_class import Task
 users_table = []
 tasks_list = []
+categories = {1:'cleaning', 2:'buying',3:'cooking'}
 
 ## - save user data base
 def save(list_to_save:list):
@@ -13,7 +14,7 @@ def save(list_to_save:list):
 
 ## - upload user data base
 def upload():
-    #uploading data base from pickle
+    #uploading database from pickle
     with open ("users.pickle",'rb') as f:
         table = pickle.load(f)
     return table
@@ -27,7 +28,7 @@ def save_tasks(list_to_save:list):
 
 ## - upload tasks data base
 def upload_tasks():
-    #uploading data base from pickle
+    #uploading database from pickle
     with open ("tasks.pickle",'rb') as f:
         tasks_table = pickle.load(f)
     return tasks_table
@@ -36,11 +37,13 @@ def upload_tasks():
 #1 - user login
 def login(user_name:str, password:str, users_table:list):
     for user in users_table:
+
         for parameter_password in user:
+            print(parameter_password)
             if ((user_name == user.get(parameter_password)) and (password == parameter_password)):
                 return("welcome")
-    else:
-        return("No such user")
+
+    return("No such user")
     
 
 
@@ -126,7 +129,7 @@ def delete_user(password_to_delete:str, users_table:list):
 
 
 #4 - Add task
-def add_task (task_name:str, task_serial_num:int, name:str, tz:str,category:dict, accept_date:datetime, mission_end_date:datetime, description:str,status:bool):
+def add_task (task_name:str, task_serial_num:int, name:str, tz:str,category:dict, accept_date:datetime, mission_end_date:datetime, description:str,status:str):
     task1 = Task(task_name = task_name, task_serial_num = task_serial_num, name = name, tz = tz,category = category, accept_date = accept_date, mission_end_date = mission_end_date, description = description,status = status)
     tasks_list = upload_tasks()
     tasks_list.append(task1)
@@ -254,16 +257,133 @@ def search_task(serial_num:int, tasks_list:list):
 
 #13 - delete task
 def delete_task(serial_num:int, tasks_list:list):
-    '''The serial num is the key so it is 1 in a kind'''
+    '''The serial num is the key, so it is 1 in a kind'''
     for task in tasks_list:
         if task.task_serial_num == serial_num:
                 tasks_list.remove(task)
                 save(tasks_list)
                 return(f"Task deleted\n{tasks_list}")
-       
-  
 
 
+def menu():
+    while True:
+        action = int(input('''
+    Welcome - U arrived to the Task menu.
+    Please press one of the following actions:
+    1. Add user to Data Base
+    2. Show users Data Base
+    3. Delete specific user
+    4. Add mission
+    5. Search user
+    6. Search all task per user
+    7. Update task by a key
+    8. Search tasks by categories
+    9. Show all tasks
+    10.Changing task status
+    11.Show tasks status
+    12.Search task by serial number
+    13.Delete task
+    14.Exit
+    '''))
+
+        # Add user to Data Base
+        if action == 1:
+            print(add_user(users_table=upload()))
+
+        # Show users data base
+        elif action == 2:
+            print("These are all users:", upload())
+
+
+        # Delete user
+        elif action == 3:
+            password_to_delete = input("Enter user's password that u want to delete: ")
+            delete_user(password_to_delete, users_table=upload())
+
+        # Add task
+        elif action == 4:
+            task_name = input("Enter task name: ")
+            task_serial_num = int(input("give task unique number: "))
+            name = input("Enter who's going to do the task: ")
+            tz = input("Enter id of the executing: ")
+            key = int(input('''Enter digit for the category that the task belongs to:
+                                                    1. cleaning
+                                                    2. buying
+                                                    3. cooking
+                                                        '''))
+            category = categories.get(key, "No such category")
+            accept_date = datetime.date.today()
+            print("Enter end date for the task:")
+            day = int(input("Enter finish day:"))
+            month = int(input("Enter finish month:"))
+            year = int(input("Enter finish year:"))
+            mission_end_date = datetime.date(year, month, day)
+            description = input("Enter task description:")
+            status = 'Not finished'
+            print(add_task(task_name, task_serial_num, name, tz, category, accept_date, mission_end_date, description,
+                           status))
+
+
+        # Search user
+        elif action == 5:
+            password = input("Enter password to search user: ")
+            print(search_user(password, users_table=upload()))
+
+            # Search tasks for person
+        elif action == 6:
+            tz = input("Enter Id to search user: ")
+            print(search_person_tasks(tz, tasks_list=upload_tasks()))
+
+
+
+        # Update task by a key
+        elif action == 7:
+            num = int(input("Enter task serial number that u want to update: "))
+            key = int(input('''Update 1 of the followings, press number between 1 to 3: 
+            1: Task Name
+            2: Person Name
+            3: Mission End Date  '''))
+            update_task(key, tasks_list=upload_tasks(), serial_num=num)
+
+        # Search task by category
+        elif action == 8:
+            key = input("Enter the name of the category that u wanna search: ")
+            print(search_by_category(key, tasks_list=upload_tasks()))
+
+
+
+        # Show all tasks data
+        elif action == 9:
+            print(upload_tasks())
+
+
+        # Change task status
+        elif action == 10:
+            serial_num = int(input("Enter task serial number to change status: "))
+            done = input("The mission is done ? --> y/n ")
+            print(updating_status(done, serial_num, tasks_list=upload_tasks()))
+
+
+
+        # Show tasks status
+        elif action == 11:
+            status_value = input("Enter which status do you want to check --> t/f  ")
+            print(checking_status(status_value, tasks_list=upload_tasks()))
+
+
+        # search task by serial number
+        elif action == 12:
+            serial_num = int(input("Enter task's serial num that u want to search: "))
+            print(search_task(serial_num, tasks_list=upload_tasks()))
+
+        # Delete task
+        elif action == 13:
+            serial_num = int(input("Enter task's serial num that u want to delete: "))
+            print(delete_task(serial_num, tasks_list=upload_tasks()))
+        # break
+        elif action == 14:
+            print("U left the menu, bye...")
+            break
 
 #14 - exit from menu
 
