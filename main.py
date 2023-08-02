@@ -386,6 +386,3 @@ def menu():
             break
 
 #14 - exit from menu
-
-
-

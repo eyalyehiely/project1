@@ -70,13 +70,10 @@ import math
 # users_table = []
 # save(users_table)
 
-#delete_all_users(users_table)
 #---------------
 
-
-
 # tasks_list = []
-#save_tasks(tasks_list)
+# save_tasks(tasks_list)
 
 #-----------------------------------------#
 
